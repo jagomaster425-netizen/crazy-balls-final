@@ -6,18 +6,12 @@ workflows:
       vars:
         ANDROID_HOME: /opt/android-sdk-linux
       java: 17
-      instance_type: mac_mini_m1
     scripts:
-      - name: Ensure gradlew executable
-        script: |
-          if [ -f ./gradlew ]; then
-            chmod +x ./gradlew
-          else
-            echo "gradlew not found in repo root — build may fail unless gradle is available on the machine."
-          fi
+      - name: Give execution permission
+        script: chmod +x gradlew
       - name: Clean project
-        script: ./gradlew clean || true
+        script: ./gradlew clean
       - name: Build debug APK
-        script: ./gradlew assembleDebug || ./gradlew assemble || true
+        script: ./gradlew assembleDebug
     artifacts:
       - app/build/outputs/**/*.apk
