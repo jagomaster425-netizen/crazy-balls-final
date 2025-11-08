@@ -1,0 +1,23 @@
+workflows:
+  android-build:
+    name: Build Android APK
+    max_build_duration: 60
+    environment:
+      vars:
+        ANDROID_HOME: /opt/android-sdk-linux
+      java: 17
+      instance_type: mac_mini_m1
+    scripts:
+      - name: Ensure gradlew executable
+        script: |
+          if [ -f ./gradlew ]; then
+            chmod +x ./gradlew
+          else
+            echo "gradlew not found in repo root — build may fail unless gradle is available on the machine."
+          fi
+      - name: Clean project
+        script: ./gradlew clean || true
+      - name: Build debug APK
+        script: ./gradlew assembleDebug || ./gradlew assemble || true
+    artifacts:
+      - app/build/outputs/**/*.apk

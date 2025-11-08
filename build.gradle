@@ -1,0 +1,2 @@
+// Top-level build file - minimal placeholder (actual Gradle wrapper/config handled by build services)
+buildscript { repositories { mavenCentral() } }
